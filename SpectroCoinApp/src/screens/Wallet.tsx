@@ -1,19 +1,9 @@
 import React from 'react';
-import {
-  View,
-  StyleSheet,
-  FlatList,
-  ListRenderItemInfo,
-  TouchableOpacity,
-} from 'react-native';
+import {View, StyleSheet, FlatList, ListRenderItemInfo} from 'react-native';
+import {Navigation, NavigationComponentProps} from 'react-native-navigation';
 import {Text} from 'react-native-ui-lib';
 import {data} from '../api/mockData.json';
-
-interface WalletListItem {
-  name: string;
-  id: string;
-  balance: number;
-}
+import BalanceListItem from '../components/BalanceListItem';
 
 const getHeaderComponent = () => {
   return (
@@ -23,22 +13,27 @@ const getHeaderComponent = () => {
   );
 };
 
-const renderItem = ({item}: ListRenderItemInfo<WalletListItem>) => {
-  return (
-    <TouchableOpacity
-      style={styles.listItem}
-      onPress={() => {
-        console.log('~~~~ wiggle');
-      }}>
-      <Text style={styles.listItemText}>
-        {item.name} ( {item.id} )
-      </Text>
-      <Text style={styles.listItemText}>{item.balance}</Text>
-    </TouchableOpacity>
-  );
-};
+const Wallet = ({componentId}: NavigationComponentProps) => {
+  const openCurrencyScreen = (item: CurrencyDataItem) =>
+    Navigation.push(componentId, {
+      component: {
+        name: 'scApp.CurrencyScreen',
+        passProps: {
+          item,
+        },
+        options: {
+          topBar: {
+            backButton: {showTitle: false, color: '#FFFFFF'},
+            background: {color: '#161925'},
+          },
+        },
+      },
+    });
 
-const Wallet = () => {
+  const renderItem = ({item}: ListRenderItemInfo<CurrencyDataItem>) => (
+    <BalanceListItem item={item} onPress={openCurrencyScreen} />
+  );
+
   return (
     <FlatList
       data={data}
@@ -64,18 +59,6 @@ const styles = StyleSheet.create({
   balanceText: {
     fontSize: 40,
     textAlign: 'center',
-  },
-  listItem: {
-    backgroundColor: '#0C0000',
-    borderRadius: 15,
-    padding: 20,
-    marginHorizontal: 20,
-    marginBottom: 20,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  listItemText: {
-    color: '#FCFFFF',
   },
 });
 

@@ -3,22 +3,26 @@
     {
       "name": "Bitcoin",
       "id": "BTC",
-      "balance": 0.31244124
+      "balance": 0.31244124,
+      "rate": 0.00004278
     },
     {
       "name": "Banker",
       "id": "BNK",
-      "balance": 131231567
+      "balance": 131231567,
+      "rate": 3.04929123
     },
     {
       "name": "Pax Dollar",
       "id": "USDP",
-      "balance": 0.32
+      "balance": 0.32,
+      "rate": 1.087604053186543941
     },
     {
       "name": "Ethereum",
       "id": "ETH",
-      "balance": 0.327834478541236547
+      "balance": 0.327834478541236547,
+      "rate": 0.000805881952433489
     }
   ]
 }
