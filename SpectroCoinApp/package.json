@@ -9,10 +9,19 @@
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
+  "peerDependencies": {
+    "react-native-reanimated": "*",
+    "react-native-gesture-handler": "*"
+  },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.8.2",
     "react": "17.0.2",
     "react-native": "0.68.2",
-    "react-native-navigation": "^7.28.0"
+    "react-native-gesture-handler": "^2.4.2",
+    "react-native-navigation": "^7.28.0",
+    "react-native-reanimated": "^2.8.0",
+    "react-native-ui-lib": "^6.17.1",
+    "react-redux": "^8.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
