@@ -1,11 +1,8 @@
-/**
- * @format
- */
-
 import {Navigation} from 'react-native-navigation';
-import App from './App';
+import Wallet from './src/screens/Wallet';
 
-Navigation.registerComponent('com.myApp.WelcomeScreen', () => App);
+Navigation.registerComponent('scApp.Wallet', () => Wallet);
+
 Navigation.events().registerAppLaunchedListener(() => {
   Navigation.setRoot({
     root: {
@@ -13,7 +10,16 @@ Navigation.events().registerAppLaunchedListener(() => {
         children: [
           {
             component: {
-              name: 'com.myApp.WelcomeScreen',
+              name: 'scApp.Wallet',
+              options: {
+                topBar: {
+                  title: {
+                    text: 'SC Wallet',
+                    fontSize: 30,
+                    fontFamily: 'Verdana',
+                  },
+                },
+              },
             },
           },
         ],

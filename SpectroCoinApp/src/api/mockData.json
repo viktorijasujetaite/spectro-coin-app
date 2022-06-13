@@ -1,0 +1,24 @@
+{
+  "data": [
+    {
+      "name": "Bitcoin",
+      "id": "BTC",
+      "balance": 0.31244124
+    },
+    {
+      "name": "Banker",
+      "id": "BNK",
+      "balance": 131231567
+    },
+    {
+      "name": "Pax Dollar",
+      "id": "USDP",
+      "balance": 0.32
+    },
+    {
+      "name": "Ethereum",
+      "id": "ETH",
+      "balance": 0.327834478541236547
+    }
+  ]
+}
