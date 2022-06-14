@@ -1,9 +1,11 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, StyleSheet, FlatList, ListRenderItemInfo} from 'react-native';
 import {Navigation, NavigationComponentProps} from 'react-native-navigation';
 import {Text} from 'react-native-ui-lib';
 import {data} from '../api/mockData.json';
 import BalanceListItem from '../components/BalanceListItem';
+import {useAppSelector, useAppDispatch} from '../app/hooks';
+import {increment, loadBalance} from '../app/walletSlice';
 
 const getHeaderComponent = () => {
   return (
@@ -14,7 +16,18 @@ const getHeaderComponent = () => {
 };
 
 const Wallet = ({componentId}: NavigationComponentProps) => {
-  const openCurrencyScreen = (item: CurrencyDataItem) =>
+  const value = useAppSelector(state => state.wallet.value);
+  const balance = useAppSelector(state => state.wallet.balance);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(loadBalance(data));
+  }, [dispatch]);
+
+  const openCurrencyScreen = (item: CurrencyDataItem) => {
+    // TODO: remove this usage example
+    dispatch(increment());
+
     Navigation.push(componentId, {
       component: {
         name: 'scApp.CurrencyScreen',
@@ -29,18 +42,22 @@ const Wallet = ({componentId}: NavigationComponentProps) => {
         },
       },
     });
+  };
 
   const renderItem = ({item}: ListRenderItemInfo<CurrencyDataItem>) => (
     <BalanceListItem item={item} onPress={openCurrencyScreen} />
   );
 
   return (
-    <FlatList
-      data={data}
-      renderItem={renderItem}
-      ListHeaderComponent={getHeaderComponent}
-      style={styles.listContainer}
-    />
+    <>
+      <Text style={styles.balanceText}>Hook test: {value}</Text>
+      <FlatList
+        data={balance}
+        renderItem={renderItem}
+        ListHeaderComponent={getHeaderComponent}
+        style={styles.listContainer}
+      />
+    </>
   );
 };
 
