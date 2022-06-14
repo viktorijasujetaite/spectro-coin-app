@@ -7,7 +7,7 @@ import type {RootState} from './store';
 
 export interface WalletState {
   value: number;
-  balance: Array<CurrencyDataItem>;
+  balance: Array<CurrencyBalanceItem>;
 }
 
 const initialState: WalletState = {
@@ -22,8 +22,9 @@ export const walletSlice = createSlice({
     increment: state => {
       state.value += 1;
     },
-    loadBalance: (state, action: PayloadAction<CurrencyDataItem[]>) => {
-      state.balance = [...state.balance, ...action.payload];
+    loadBalance: (state, action: PayloadAction<CurrencyBalanceItem[]>) => {
+      const newState = {...state.balance, ...action.payload};
+      state.balance = Object.values<CurrencyBalanceItem>(newState);
     },
   },
 });

@@ -6,6 +6,7 @@ import {data} from '../api/mockData.json';
 import BalanceListItem from '../components/BalanceListItem';
 import {useAppSelector, useAppDispatch} from '../app/hooks';
 import {increment, loadBalance} from '../app/walletSlice';
+import {getCurrencyData, getPrices} from '../api';
 
 const getHeaderComponent = () => {
   return (
@@ -21,10 +22,17 @@ const Wallet = ({componentId}: NavigationComponentProps) => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    const fetchData = async () => {
+      // TODO: populate data with prices on load
+      console.log('~~~~~~~ CURRENCY DATA', await getCurrencyData('BTC'));
+      console.log('~~~~~~~ PRICES', await getPrices(['BTC', 'ETH']));
+    };
+    fetchData();
+
     dispatch(loadBalance(data));
   }, [dispatch]);
 
-  const openCurrencyScreen = (item: CurrencyDataItem) => {
+  const openCurrencyScreen = (item: CurrencyBalanceItem) => {
     // TODO: remove this usage example
     dispatch(increment());
 
@@ -44,7 +52,7 @@ const Wallet = ({componentId}: NavigationComponentProps) => {
     });
   };
 
-  const renderItem = ({item}: ListRenderItemInfo<CurrencyDataItem>) => (
+  const renderItem = ({item}: ListRenderItemInfo<CurrencyBalanceItem>) => (
     <BalanceListItem item={item} onPress={openCurrencyScreen} />
   );
 

@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import {Text} from 'react-native-ui-lib';
 
-const CurrencyScreen = ({item}: {item: CurrencyDataItem}) => {
+const CurrencyScreen = ({item}: {item: CurrencyBalanceItem}) => {
   const [dollarValue, setDollarValue] = useState(1);
   const [cryptoValue, setCryptoValue] = useState(item.rate);
 

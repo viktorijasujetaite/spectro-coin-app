@@ -2,8 +2,8 @@ import React from 'react';
 import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 
 interface Props {
-  item: CurrencyDataItem;
-  onPress: (item: CurrencyDataItem) => void;
+  item: CurrencyBalanceItem;
+  onPress: (item: CurrencyBalanceItem) => void;
 }
 
 const BalanceListItem: React.FC<Props> = ({item, onPress}: Props) => {
