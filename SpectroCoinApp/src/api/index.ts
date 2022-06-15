@@ -1,28 +1,53 @@
-const getUrl = (id = 'BTC') => `https://spectrocoin.com/scapi/ticker/${id}/USD`;
+export const getUserData = async () => {
+  const {data} = require('./mockData.json');
+  const currencyIds = getAllUserCurrencies(data);
+  const allPrices = await getPrices(currencyIds);
 
-export const getCurrencyData: (
-  id: string,
-) => Promise<CurrencyResponse> = async (id = 'BTC') => {
+  const mappedData: CurrencyBalanceItem[] = data.map(
+    (item: UserBalanceItem) => {
+      const rate = allPrices.find(price => price.id === item.id)?.price;
+      return {...item, rate};
+    },
+  );
+
+  return mappedData;
+};
+
+const getCurrencyData: (id: string) => Promise<CurrencyResponse> = async (
+  id = 'BTC',
+) => {
   const url = getUrl(id);
-  const response = await fetch(url).then(res => res.json());
+  const response = await fetch(url)
+    .then(res => res.json())
+    .catch(e => console.error('Failed to fetch currency data: ', e));
   return response;
 };
 
-export const getPrices: (
-  ids: Array<string>,
-) => Promise<PriceResponse[]> = async (ids = []) => {
+const getPrices: (ids: Array<string>) => Promise<PriceResponse[]> = async (
+  ids = [],
+) => {
   const currencyDataPromises: Promise<CurrencyResponse>[] = ids.map(
     async id => {
       return await getCurrencyData(id);
     },
   );
 
-  const allCurrencyData = await Promise.all(currencyDataPromises);
+  try {
+    const allCurrencyData = await Promise.all(currencyDataPromises);
 
-  const allPrices = allCurrencyData.map(item => ({
-    id: item.currencyFrom,
-    price: item.lastHP,
-  }));
+    const allPrices = allCurrencyData.map(item => ({
+      id: item.currencyFrom,
+      price: item.lastHP,
+    }));
 
-  return allPrices;
+    return allPrices;
+  } catch (e) {
+    console.error('Error fetching prices: ', e);
+    return Promise.reject();
+  }
 };
+
+const getUrl = (id = 'BTC') => `https://spectrocoin.com/scapi/ticker/${id}/USD`;
+
+const getAllUserCurrencies = (data: UserBalanceItem[]) =>
+  data.map(item => item.id);

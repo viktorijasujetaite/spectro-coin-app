@@ -7,9 +7,11 @@ import {
   TextInput,
 } from 'react-native';
 import {Text} from 'react-native-ui-lib';
+import {Colors} from '../constants/colors';
+import {AppStrings} from '../constants/strings';
 
 const CurrencyScreen = ({item}: {item: CurrencyBalanceItem}) => {
-  const [dollarValue, setDollarValue] = useState(1);
+  const [dollarValue, setDollarValue] = useState(0);
   const [cryptoValue, setCryptoValue] = useState(item.rate);
 
   const setDollar = (text: string) => {
@@ -27,12 +29,12 @@ const CurrencyScreen = ({item}: {item: CurrencyBalanceItem}) => {
   const renderExchangeCalculator = () => {
     return (
       <KeyboardAvoidingView>
-        <Text style={styles.defaultText}>Calculator</Text>
+        <Text style={styles.defaultText}>{AppStrings.CALCULATOR_TITLE}</Text>
         <View style={styles.inputContainer}>
           <TextInput
             keyboardType="numeric"
-            value={cryptoValue ? `${dollarValue}` : undefined}
-            placeholder="$"
+            value={dollarValue ? `${dollarValue}` : undefined}
+            placeholder={AppStrings.CURRENCY_SIGN_DOL}
             style={styles.inputField}
             onBlur={Keyboard.dismiss}
             onChangeText={setCrypto}
@@ -57,7 +59,7 @@ const CurrencyScreen = ({item}: {item: CurrencyBalanceItem}) => {
       <Text style={styles.title}>
         {item.name} ( {item.id} )
       </Text>
-      <Text style={styles.subtitle}>Current Balance</Text>
+      <Text style={styles.subtitle}>{AppStrings.CURRENT_BALANCE}</Text>
       <Text style={styles.defaultText}>
         {item.id} {item.balance}
       </Text>
@@ -74,11 +76,11 @@ const CurrencyScreen = ({item}: {item: CurrencyBalanceItem}) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#161925',
+    backgroundColor: Colors.defaultDark,
     flex: 1,
   },
   titleContainer: {
-    backgroundColor: '#596285',
+    backgroundColor: Colors.accentContainer,
     padding: 40,
     marginHorizontal: 20,
     marginTop: 40,
@@ -86,18 +88,18 @@ const styles = StyleSheet.create({
     borderRadius: 15,
   },
   defaultText: {
-    color: '#FFFFFF',
+    color: Colors.white,
     fontSize: 20,
     textAlign: 'center',
   },
   title: {
-    color: '#FFFFFF',
+    color: Colors.white,
     fontSize: 25,
     paddingBottom: 20,
     textAlign: 'center',
   },
   subtitle: {
-    color: '#FFFFFF',
+    color: Colors.white,
     fontSize: 15,
     paddingBottom: 10,
     textAlign: 'center',
@@ -107,7 +109,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   inputField: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Colors.white,
     borderRadius: 15,
     padding: 20,
     margin: 20,

@@ -1,7 +1,10 @@
-interface CurrencyBalanceItem {
+interface UserBalanceItem {
   name: string;
   id: string;
   balance: number;
+}
+
+interface CurrencyBalanceItem extends UserBalanceItem {
   rate: number;
 }
 
